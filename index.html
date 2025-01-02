@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Vidbox - Share Your World</title>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <link rel="stylesheet" href="style.min.css">
+   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+   <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+   <div class="app-container">
+       <!-- Navigation -->
+       <nav class="navbar">
+           <div class="logo">
+    <img src="logo.png" alt="Vibox Logo" class="logo-image">
+    <span>Vidbox</span>
+</div>
+<div class="search-container">
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search videos...">
+        <button id="searchButton">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+    <div class="trending-searches">
+        <div class="trending-title">Trending Searches</div>
+        <div class="trending-list"></div>
+    </div>
+</div>
+           <button class="upload-btn" id="openUploadModal">
+               Upload
+           </button>
+       </nav>
+
+       <!-- Main Content -->
+       <div class="reels-container" id="reelsContainer">
+           <!-- Videos will be dynamically inserted here -->
+       </div>
+
+       <!-- Upload Modal -->
+       <div class="modal" id="uploadModal">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h2>Upload New Video</h2>
+                   <button class="close-modal">×</button>
+               </div>
+               <form id="uploadForm" class="upload-form">
+                   <div class="file-drop-area" id="dropArea">
+                       <input type="file" id="fileInput" accept="video/*" hidden>
+                       <div class="file-message">
+                           <div class="upload-icon">📁</div>
+                           <p>Drag & drop your video or click to browse</p>
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <input type="text" id="title" placeholder="Video Title" required>
+                   </div>
+                   <div class="form-group">
+                       <textarea id="description" placeholder="Description (optional)"></textarea>
+                   </div>
+                   <div class="form-group">
+                       <input type="text" id="tags" placeholder="Tags (comma separated)">
+                   </div>
+                   <div class="upload-progress" hidden>
+                       <div class="progress-bar">
+                           <div class="progress-fill"></div>
+                       </div>
+                       <p class="progress-text">Uploading: 0%</p>
+                   </div>
+                   <button style="background: var(--gradient-primary);border: none;animation: likeAnimation 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);padding: 20px;border-radius: 20px;" type="submit" class="submit-btn">Upload Video</button>
+               </form>
+           </div>
+       </div>
+
+       <!-- Video Template -->
+       <template id="videoTemplate">
+           <div class="reel">
+               <video class="video-player" loop playsinline>
+                   <source src="" type="video/mp4">
+               </video>
+               <div class="video-overlay">
+                   <div class="video-info">
+                       <h3 class="video-title"></h3>
+                       <p class="video-stats"></p>
+                   </div>
+                   <div class="video-actions">
+                       <button class="action-btn like-btn">
+                           <span class="icon">❤️</span>
+                           <span class="count">0</span>
+                       </button>
+                       <button class="action-btn comment-btn">
+                           <span class="icon">💬</span>
+                           <span class="count">0</span>
+                       </button>
+                       <button class="action-btn share-btn">
+                           <span class="icon">⮡</span>
+                       </button>
+                   </div>
+               </div>
+               <div class="comments-container"></div>
+           </div>
+       </template>
+
+       <!-- Comment Modal -->
+       <div class="modal comment-modal" id="commentModal">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h2>Comments</h2>
+                   <button class="close-modal">×</button>
+               </div>
+               <div class="comments-list">
+                   <!-- Comments will be dynamically inserted here -->
+               </div>
+               <form class="comment-form">
+                   <textarea placeholder="Add a comment..." required></textarea>
+                   <button type="submit">Post</button>
+               </form>
+           </div>
+       </div>
+	   
+	   <!-- Search Modal -->
+<div class="modal search-modal" id="searchModal">
+    <div class="modal-content search-modal-content">
+        <div class="modal-header">
+            <div class="search-box-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search videos..." autocomplete="off">
+                <div class="search-info">min. 3 characters</div>
+            </div>
+            <button class="close-modal">×</button>
+        </div>
+        <div class="search-results-container">
+            <div class="trending-searches">
+                <div class="trending-header">
+                    <span class="trending-icon">🔥</span>
+                    <h3>Trending Searches</h3>
+                </div>
+                <div class="trending-list"></div>
+            </div>
+            <div class="recent-searches">
+                <div class="recent-header">
+                    <span class="recent-icon">⌚</span>
+                    <h3>Your Recent Searches</h3>
+                </div>
+                <div class="recent-list"></div>
+            </div>
+            <div class="search-results"></div>
+        </div>
+    </div>
+</div>
+   </div>
+
+   <script src="app.min.js"></script>
+</body>
+</html>
